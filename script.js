@@ -4,7 +4,8 @@ uploadFileInput = uploadBox.querySelector("input"),
 widthInput = document.querySelector(".width input"),
 heightInput = document.querySelector(".height input"),
 ratioInput = document.querySelector(".ratio input"),
-qualityInput = document.querySelector(".quality input");
+qualityInput = document.querySelector(".quality input"),
+downloadBtn = document.querySelector(".downloadBtn");
 
 let ogImageRatio;
 
@@ -30,6 +31,24 @@ heightInput.addEventListener("input",()=>{
     widthInput.value = Math.floor(width);
 })
 
+const resizeAndDonload = ()=>{
+    downloadBtn.innerText = "Downloading Image..."
+    setTimeout(() => {
+        const canvas = document.createElement("canvas");
+        const a = document.createElement("a");
+        const ctx = canvas.getContext("2d");
+        const imgQuality = qualityInput.checked ? 0.7 : 1.0;
+        canvas.width = widthInput.value;
+        canvas.height = heightInput.value;
+        ctx.drawImage(previewImg, 0, 0, canvas.width, canvas.height);
+        // document.body.appendChild(canvas);
+        a.href = canvas.toDataURL("image/jpeg",imgQuality); //passing canvas data url as href value of <a> element
+        a.download = new Date().getTime();  // passing current time to download value
+        a.click(); // clicking a element so the file donload
+        downloadBtn.innerText = "Download Image"
+    }, 500);
+}
+downloadBtn.addEventListener("click",resizeAndDonload);
 uploadFileInput.addEventListener("change",loadFile);
 uploadBox.addEventListener("click",()=>{
     uploadFileInput.click();

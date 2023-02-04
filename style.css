@@ -14,9 +14,14 @@ body{
 }
 .container{
     width: 450px;
+    height: 280px;
     background-color: #fff;
     border-radius: 10px;
     padding: 30px;
+    transition:height 0.2s ease;
+}
+.container.active{
+    height: 530px;
 }
 .container .upload-box{
     height: 225px;
@@ -47,6 +52,13 @@ body{
 }
 .container .content{
     margin-top: 30px;
+    opacity: 0;
+    pointer-events: none;
+    transition:opacity 0.5s 0.05s ease;
+}
+.container.active .content{
+    opacity: 1;
+    pointer-events: auto;
 }
 .content .row{
     display: flex;
